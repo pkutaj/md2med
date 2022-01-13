@@ -3,6 +3,7 @@ import json
 import os
 import sys
 import argparse
+from pprint import pprint as pp
 
 
 def md2medium(doc_name, file_to_publish, tag) -> None:
@@ -31,7 +32,7 @@ def md2medium(doc_name, file_to_publish, tag) -> None:
                                  data=json.dumps(data).encode("utf-8"), verify=cert)
         response.raise_for_status()
         print(response)
-        print(response.content)
+        pp(json.loads(response.content.decode()))
 
     except requests.exceptions.RequestException as e:
         print(e, file=sys.stderr)
