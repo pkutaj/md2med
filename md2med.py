@@ -6,7 +6,7 @@ import argparse
 from pprint import pprint as pp
 
 
-def md2medium(doc_name, file_to_publish, tag) -> None:
+def md2medium(file_to_publish, tag) -> None:
     headers = {
         'Authorization': f"Bearer {os.environ['md2med_TOKEN']}",
         'accept': 'application/json',
@@ -19,6 +19,7 @@ def md2medium(doc_name, file_to_publish, tag) -> None:
     with open(file_to_publish, mode="rt", encoding="utf-8") as docFile:
         doc_body = docFile.read()
 
+    doc_name = input("Enter doc name:")
     data = {
         "title": doc_name,
         "contentFormat": "markdown",
@@ -41,7 +42,6 @@ def md2medium(doc_name, file_to_publish, tag) -> None:
 
 def init_argparse() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--doc_name")
     parser.add_argument("--file_to_publish")
     parser.add_argument("--tag")
     return parser
@@ -50,8 +50,7 @@ def init_argparse() -> argparse.ArgumentParser:
 def main() -> None:
     parser = init_argparse()
     args = parser.parse_args()
-    md2medium(doc_name=args.doc_name,
-              file_to_publish=args.file_to_publish, tag=args.tag)
+    md2medium(file_to_publish=args.file_to_publish, tag=args.tag)
 
 
 if __name__ == "__main__":
